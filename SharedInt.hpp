@@ -78,9 +78,6 @@ public:
     }
 
     T& operator*() {
-        if (!obj_) {
-            throw std::runtime_error("*nullptr\n");
-        }
         return *obj_;
     }
 };
