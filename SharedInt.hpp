@@ -1,11 +1,10 @@
 template <typename T>
 class SharedPtr {
-   private:
-
-    size_t counter_;
-    T* obj_;
-
+private:
+    size_t counter_ = 0;
+    T* obj_ = nullptr;
     std::string name_;
+
     void print_counter() const {
         if (counter_) {
             std::cout << name_ << ": &" << counter_ << '\n';
@@ -14,10 +13,8 @@ class SharedPtr {
         }
     }
 
-   public:
+public:
     SharedPtr(std::string_view name) : name_(name) {
-        obj_ = nullptr;
-        counter_ = 0;
         std::cout << name_ << " -> Default constructor.\n";
         print_counter();
     };
@@ -30,8 +27,11 @@ class SharedPtr {
     }
     ~SharedPtr() {
         if (--counter_ == 0) {
-            delete obj_;
-            std::cout << name_ << " -> destructed.\n";
+                delete obj_;
+                std::cout << name_ << " -> destructed.\n";
+        } else {
+            std::cout << name_  << " not destructed.\n";
+            print_counter();
         }
     }
 
@@ -46,5 +46,7 @@ class SharedPtr {
         std::cout << name_ << "-> copy constructor.\n";
     }
 
-    T& operator*() { return *obj_; }
+    T& operator*() {
+        return *obj_;
+    }
 };
