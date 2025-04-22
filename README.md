@@ -10,17 +10,27 @@ This is my own implementation of a template-based std::shared_ptr, without using
 
 - **Google Test**: The entire basic interface is covered with unit tests.
 ```cpp
+TEST(MyShared, default_constructor) {
+    SharedPtr<int> ptr;
+    ASSERT_THROW(*ptr, std::logic_error);
+}
 ```
 
 ## Interface
 
-- `Template`                        — here.
+- `SharedPtr()` — default constructor  
+- `SharedPtr(const T& resource)` — constructor with object  
+- `~SharedPtr()` — destructor, delete resource
+- `T& operator*()` — return valid resource
+- `T* get()` — get resource address
 
-## Notes  
+## Notes
 
 ## Example Usage
 
 ```cpp
+SharedPtr<int> ptr(1);
+std::cout << *ptr << '\n;  // Output: 1;
 ```
 ## Build and Run
 
@@ -37,5 +47,5 @@ To build and run the project, follow these steps:
 
 4. **In build folder**
 ```bash
-./unit_tests
+./shared_ptr
 ```
