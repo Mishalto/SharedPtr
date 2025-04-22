@@ -6,6 +6,14 @@ This is my own implementation of a template-based std::shared_ptr, without using
 
 - **Valgrind**: No memory leaks.
 ```bash
+HEAP SUMMARY:
+in use at exit: 0 bytes in 0 blocks
+heap usage: 20,311 allocs, 20,311 frees, 767,643 bytes allocated
+
+All heap blocks were freed -- no leaks are possible
+
+For lists of detected and suppressed errors, rerun with: -s
+ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 
 - **Google Test**: The entire basic interface is covered with unit tests.
@@ -18,13 +26,18 @@ TEST(MyShared, default_constructor) {
 
 ## Interface
 
-- `SharedPtr()` — default constructor  
+- `SharedPtr()` — default constructor    
 - `SharedPtr(const T& resource)` — constructor with object  
-- `~SharedPtr()` — destructor, delete resource
-- `T& operator*()` — return valid resource
+- `SharedPtr(const SharedPtr& other)` — copy constructor  
+- `~SharedPtr()` — destructor, delete resource  
+- `SharedPtr<T>& operator=(const SharedPtr<T>& other);` — copy assigment  
+- `T& operator*()` — return valid resource  
 - `T* get()` — get resource address
+- `size_t use_refs()` — get refs count
 
 ## Notes
+
+Move constructor is not implemented, and its explicit deletion is not possible.
 
 ## Example Usage
 
